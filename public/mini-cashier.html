@@ -393,7 +393,7 @@ const params    = new URLSearchParams(location.search);
 const sysId     = params.get('sys') || 1;
 const mode      = params.get('mode') || localStorage.getItem('cashierMode_' + sysId) || 'opd';
 const isIpd     = mode === 'ipd';
-const socket    = io();
+const socket    = (typeof io === 'function' ? io() : { on() {}, emit() {}, off() {}, connected: false });
 
 const modeEl = document.getElementById('hdrMode');
 modeEl.textContent = isIpd ? '🛏 IPD' : '🏥 OPD';

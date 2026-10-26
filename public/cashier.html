@@ -952,7 +952,7 @@
 const sysId      = new URLSearchParams(location.search).get('sys') || 1;
 const _urlMode   = new URLSearchParams(location.search).get('mode');
 let cashierMode  = _urlMode || localStorage.getItem('cashierMode_' + sysId) || 'opd';
-const socket     = io();
+const socket     = (typeof io === 'function' ? io() : { on() {}, emit() {}, off() {}, connected: false });
 socket.on('connect',    () => { socket.emit('join_sys', Number(sysId)); hideOffline(); });
 socket.on('disconnect', () => showOffline());
 

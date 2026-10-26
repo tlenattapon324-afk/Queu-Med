@@ -553,7 +553,7 @@
 
 <script>
 const sysId  = new URLSearchParams(location.search).get('sys') || 1;
-const socket = io();
+const socket = (typeof io === 'function' ? io() : { on() {}, emit() {}, off() {}, connected: false });
 socket.on('connect', () => socket.emit('join_sys', Number(sysId)));
 
 let queueTypes     = [];

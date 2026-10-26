@@ -17,5 +17,10 @@
   "devDependencies": {
     "@yao-pkg/pkg": "^5.16.1",
     "rcedit": "^4.0.1"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/socket.io/client-dist/*.js"
+    ]
   }
 }

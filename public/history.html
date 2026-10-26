@@ -267,7 +267,7 @@ let curTab         = 'called';
 let nsSubTab       = 'active';
 
 // ── Socket ──────────────────────────────────────────────────────────────────
-const socket = io();
+const socket = (typeof io === 'function' ? io() : { on() {}, emit() {}, off() {}, connected: false });
 socket.on('connect', () => socket.emit('join_sys', Number(sysId)));
 
 socket.on('queue_called', d => {

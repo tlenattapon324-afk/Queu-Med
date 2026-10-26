@@ -16,7 +16,8 @@ const rcedit = require('rcedit');
 
 const ROOT = path.join(__dirname, '..');
 const TARGETS = {
-  server: { entry: 'server.js',      out: 'dist/QueueServer.exe',     icon: 'assets/icons/app.ico',         desc: 'Queue-Med Server' },
+  // config: package.json "pkg.assets" bundles socket.io's browser client (read from disk at runtime)
+  server: { entry: 'server.js',      out: 'dist/QueueServer.exe',     icon: 'assets/icons/app.ico',         desc: 'Queue-Med Server', config: 'package.json' },
   agent:  { entry: 'print-agent.js', out: 'dist/QueuePrintAgent.exe', icon: 'assets/icons/print-agent.ico', desc: 'Queue-Med Print Agent' },
 };
 const NODE_RANGE = 'node20';
@@ -42,7 +43,8 @@ const NODE_RANGE = 'node20';
 
   // 3. pkg on top of the patched base
   const pkgBin = path.join(ROOT, 'node_modules', '@yao-pkg', 'pkg', 'lib-es5', 'bin.js');
-  execFileSync(process.execPath, [pkgBin, t.entry, '--target', `${NODE_RANGE}-win-x64`, '--output', t.out, '--compress', 'GZip'],
+  execFileSync(process.execPath, [pkgBin, t.entry, '--target', `${NODE_RANGE}-win-x64`, '--output', t.out, '--compress', 'GZip',
+                                  ...(t.config ? ['--config', t.config] : [])],
                { cwd: ROOT, stdio: 'inherit', env: { ...process.env, PKG_NODE_PATH: iconBase } });
   console.log(`built ${t.out} with ${t.icon}`);
 })().catch(e => { console.error(e); process.exit(1); });

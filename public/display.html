@@ -801,7 +801,7 @@
 <script>
 const sysId    = new URLSearchParams(location.search).get('sys') || 1;
 let   dispMode = ['opd','ipd','all'].includes(new URLSearchParams(location.search).get('mode')) ? new URLSearchParams(location.search).get('mode') : 'opd';
-const socket = io();
+const socket = (typeof io === 'function' ? io() : { on() {}, emit() {}, off() {}, connected: false });
 // Init badge after DOM is ready (script is at bottom of body)
 document.addEventListener('DOMContentLoaded', updateModeBadge);
 if (document.readyState !== 'loading') updateModeBadge();

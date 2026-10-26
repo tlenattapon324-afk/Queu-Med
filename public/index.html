@@ -316,7 +316,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const socket = io();
+const socket = (typeof io === 'function' ? io() : { on() {}, emit() {}, off() {}, connected: false });
 
 const _navOfficer  = sessionStorage.getItem('officerName');
 const _navDeptName = sessionStorage.getItem('currentDeptName');
