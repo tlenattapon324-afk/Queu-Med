@@ -1388,11 +1388,12 @@ app.post('/api/db-config/gen-token', requireAdmin, (req, res) => {
 
 // Bootstrap endpoint — หน้าเว็บของระบบเองใช้ดึง token มาแนบกับ request /api/sys/* โดยอัตโนมัติ
 // (ผู้ใช้ทั่วไปไม่เห็น ไม่ต้องกรอกเอง แต่ถ้า copy URL ไปยิงตรงใน Postman โดยไม่มี token จะถูกปฏิเสธ)
-// Browsers mark fetch() from the app's own pages with Sec-Fetch-Site: same-origin; Postman, curl and
-// cross-site pages don't. A logged-in session token is also accepted.
+// The app's own pages call this with a Referer from this same server; Postman / curl / copied URLs send none.
+// Sec-Fetch-Site is only sent by browsers to HTTPS or localhost (not to http://LAN-IP), so it is checked
+// only when present. A logged-in session token is also accepted.
 function isOwnPageRequest(req) {
   const site = req.headers['sec-fetch-site'];
-  if (site !== 'same-origin') return false;
+  if (site && site !== 'same-origin') return false;
   const ref = req.headers['referer'] || '';
   try { return new URL(ref).host === req.headers.host; } catch { return false; }
 }

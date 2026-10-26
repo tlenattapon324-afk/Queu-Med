@@ -1,7 +1,7 @@
 ﻿[Setup]
 AppName=ระบบคิว (Queue System)
-AppVersion=2.7.1
-AppVerName=ระบบคิว (Queue System) v2.7.1
+AppVersion=2.7.2
+AppVerName=ระบบคิว (Queue System) v2.7.2
 AppPublisher=Hospital Queue System
 AppId={{A3F2C1D0-4E5B-6F7A-8B9C-0D1E2F3A4B5C}
 DefaultDirName={autopf}\QueueSystem
