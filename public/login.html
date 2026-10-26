@@ -5,74 +5,108 @@
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="apple-touch-icon" href="/app-icon.png"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>เข้าสู่ระบบ — ระบบคิว</title>
+  <title>เข้าสู่ระบบ — Queue-Med</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="/vendor/api-token.js"></script>
   <style>
+    :root{
+      --sky-1:#eef7ff; --sky-2:#d9ecfd; --sky-3:#bfe0fb;
+      --ink:#123a5a; --ink-soft:#4f6f8a; --line:#cfe3f5;
+      --brand-1:#14c1b0; --brand-2:#0a8fc0; --brand-3:#1546b8;
+      --err-bg:#fff1f1; --err-line:#ffc9c9; --err-ink:#c62828;
+    }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Segoe UI',Tahoma,sans-serif;background:#0f1923;min-height:100vh;
-      display:flex;align-items:center;justify-content:center;color:#fff}
-    .wrap{width:100%;max-width:420px;padding:20px}
-    .card{background:#1a2a3a;border:1px solid #1e3a5f;border-radius:20px;padding:42px 38px}
+    body{font-family:'Kanit','Leelawadee UI','Segoe UI',Tahoma,sans-serif;min-height:100vh;color:var(--ink);
+      display:flex;align-items:center;justify-content:center;padding:24px 16px;overflow-x:hidden;
+      background:radial-gradient(1200px 600px at 10% -10%,#ffffff 0,transparent 60%),
+                 linear-gradient(160deg,var(--sky-1) 0%,var(--sky-2) 45%,var(--sky-3) 100%)}
+    /* soft pastel bubbles */
+    .bubble{position:fixed;border-radius:50%;filter:blur(2px);opacity:.55;z-index:0;pointer-events:none}
+    .b1{width:340px;height:340px;left:-90px;bottom:-110px;background:radial-gradient(circle at 30% 30%,#ffffff,#a7d8f7)}
+    .b2{width:220px;height:220px;right:-60px;top:-50px;background:radial-gradient(circle at 30% 30%,#ffffff,#b9e6f0)}
+    .b3{width:120px;height:120px;right:12%;bottom:8%;background:radial-gradient(circle at 30% 30%,#ffffff,#c7dcfb)}
 
-    .logo{text-align:center;margin-bottom:32px}
-    .logo-hex{font-size:2.8rem;line-height:1;display:block;margin-bottom:10px}
-    .logo-title{font-size:1.4rem;font-weight:700;color:#ffd54f}
-    .logo-sub{font-size:.82rem;color:#455a64;margin-top:5px;letter-spacing:.5px}
+    .wrap{position:relative;z-index:1;width:100%;max-width:430px}
+    .card{background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.9);border-radius:28px;padding:40px 36px 30px;
+      box-shadow:0 24px 60px rgba(21,70,184,.14),0 2px 8px rgba(21,70,184,.06)}
 
-    .field{margin-bottom:18px}
-    .field label{display:block;font-size:.78rem;color:#90caf9;font-weight:600;margin-bottom:7px;letter-spacing:.3px}
-    .field input{width:100%;background:#0f1923;border:1.5px solid #1e3a5f;border-radius:10px;
-      padding:13px 16px;color:#fff;font-size:.95rem;font-family:inherit;transition:border-color .2s}
-    .field input:focus{outline:none;border-color:#42a5f5}
-    .field input::placeholder{color:#2e4a60}
+    .brand{text-align:center;margin-bottom:28px}
+    .brand-icon{width:92px;height:92px;border-radius:24px;display:block;margin:0 auto 14px;
+      box-shadow:0 14px 30px rgba(10,143,192,.32);animation:float 5s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    .brand-name{font-size:2.35rem;font-weight:800;letter-spacing:.5px;line-height:1.1;
+      background:linear-gradient(120deg,var(--brand-1),var(--brand-2) 45%,var(--brand-3));
+      -webkit-background-clip:text;background-clip:text;color:transparent}
+    .brand-sub{font-size:.98rem;font-weight:500;color:var(--ink-soft);margin-top:6px}
+    .brand-pill{display:inline-block;margin-top:12px;font-size:.72rem;font-weight:600;letter-spacing:1px;
+      color:var(--brand-2);background:#e3f4fd;border:1px solid #c6e6f8;border-radius:999px;padding:3px 12px}
 
-    .btn-login{width:100%;background:linear-gradient(135deg,#42a5f5,#1565c0);color:#fff;
-      border:none;border-radius:12px;padding:14px;font-size:1rem;font-weight:700;
-      cursor:pointer;margin-top:6px;font-family:inherit;transition:opacity .2s;letter-spacing:.3px}
-    .btn-login:hover{opacity:.88}
-    .btn-login:disabled{opacity:.5;cursor:not-allowed}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:6px}
+    .input-wrap{position:relative}
+    .input-wrap .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;opacity:.6}
+    .field input{width:100%;background:#f6fbff;border:1.5px solid var(--line);border-radius:14px;
+      padding:13px 16px 13px 42px;color:var(--ink);font-size:1rem;font-family:inherit;transition:all .2s}
+    .field input:focus{outline:none;border-color:var(--brand-2);background:#fff;box-shadow:0 0 0 4px rgba(10,143,192,.12)}
+    .field input::placeholder{color:#9db4c8;font-weight:300}
 
-    .err{background:rgba(239,83,80,.12);border:1px solid rgba(239,83,80,.35);
-      color:#ef9a9a;border-radius:10px;padding:11px 15px;font-size:.85rem;
-      margin-top:14px;display:none;line-height:1.5}
+    .btn-login{width:100%;border:none;border-radius:14px;padding:14px;margin-top:6px;cursor:pointer;
+      font-family:inherit;font-size:1.05rem;font-weight:600;letter-spacing:.3px;color:#fff;
+      background:linear-gradient(120deg,var(--brand-2),var(--brand-3));
+      box-shadow:0 10px 22px rgba(21,70,184,.25);transition:transform .15s,box-shadow .15s,opacity .2s}
+    .btn-login:hover{transform:translateY(-1px);box-shadow:0 14px 26px rgba(21,70,184,.3)}
+    .btn-login:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .err{background:var(--err-bg);border:1px solid var(--err-line);color:var(--err-ink);border-radius:12px;
+      padding:10px 14px;font-size:.88rem;margin-top:12px;display:none;line-height:1.5}
     .err.show{display:block}
 
-    .divider{border:none;border-top:1px solid #1e3a5f;margin:26px 0}
+    .or{display:flex;align-items:center;gap:12px;margin:22px 0 14px;color:#8aa6bd;font-size:.8rem;font-weight:500}
+    .or::before,.or::after{content:'';flex:1;height:1px;background:var(--line)}
 
-    .btn-cfg{width:100%;background:transparent;border:1px solid #1e3a5f;color:#546e7a;
-      border-radius:12px;padding:12px;font-size:.85rem;cursor:pointer;font-family:inherit;
-      transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
-    .btn-cfg:hover{border-color:#42a5f5;color:#90caf9;background:rgba(66,165,245,.05)}
-    .cfg-icon{font-size:1rem}
+    .btn-bms{width:100%;background:#fff;border:1.5px solid #bfe6d2;color:#1f7a4d;border-radius:14px;padding:12px;
+      font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;
+      display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-bms:hover{background:#f1fbf5;border-color:#7fd1a7}
+    #bmsBox .btn-login{background:linear-gradient(120deg,#2fbf71,#1f8a54);box-shadow:0 10px 22px rgba(31,138,84,.22)}
 
-    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
-      border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;
-      vertical-align:middle;margin-right:7px}
+    .btn-cfg{width:100%;margin-top:18px;background:transparent;border:1.5px dashed #b9d6ee;color:var(--ink-soft);
+      border-radius:14px;padding:11px;font-size:.9rem;font-weight:500;cursor:pointer;font-family:inherit;
+      transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-cfg:hover{border-color:var(--brand-2);border-style:solid;color:var(--brand-2);background:#f3faff}
+
+    .foot{text-align:center;margin-top:18px;font-size:.75rem;color:#7f9bb3}
+
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);
+      border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:7px}
     @keyframes spin{to{transform:rotate(360deg)}}
+
     /* Department selection modal */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;
-      align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(3px);
-      opacity:0;pointer-events:none;transition:opacity .25s}
+    .modal-overlay{position:fixed;inset:0;background:rgba(18,58,90,.25);display:flex;align-items:center;justify-content:center;
+      z-index:100;backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .25s;padding:16px}
     .modal-overlay.show{opacity:1;pointer-events:all}
-    .modal{background:#1a2a3a;border:1px solid #1e3a5f;border-radius:20px;
-      padding:36px 32px;width:100%;max-width:420px;transform:translateY(16px);transition:transform .25s}
+    .modal{background:#fff;border-radius:24px;padding:32px 28px;width:100%;max-width:420px;
+      box-shadow:0 24px 60px rgba(21,70,184,.2);transform:translateY(16px);transition:transform .25s}
     .modal-overlay.show .modal{transform:translateY(0)}
-    .modal-title{font-size:1.15rem;font-weight:700;color:#ffd54f;margin-bottom:6px;text-align:center}
-    .modal-sub{font-size:.82rem;color:#455a64;text-align:center;margin-bottom:24px;letter-spacing:.3px}
+    .modal-title{font-size:1.3rem;font-weight:700;color:var(--brand-3);margin-bottom:4px;text-align:center}
+    .modal-sub{font-size:.88rem;color:var(--ink-soft);text-align:center;margin-bottom:20px}
     .dept-list{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow-y:auto}
-    .dept-list::-webkit-scrollbar{width:5px}
-    .dept-list::-webkit-scrollbar-track{background:transparent}
-    .dept-list::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:4px}
-    .dept-btn{background:#0f1923;border:1.5px solid #1e3a5f;border-radius:12px;
-      color:#cfd8dc;font-size:.95rem;font-family:inherit;padding:14px 18px;
-      text-align:left;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:10px}
-    .dept-btn:hover{border-color:#42a5f5;color:#fff;background:rgba(66,165,245,.08)}
-    .dept-btn:active{background:rgba(66,165,245,.15)}
+    .dept-btn{background:#f6fbff;border:1.5px solid var(--line);border-radius:14px;color:var(--ink);
+      font-size:1rem;font-family:inherit;font-weight:500;padding:13px 16px;text-align:left;cursor:pointer;
+      transition:all .18s;display:flex;align-items:center;gap:10px}
+    .dept-btn:hover{border-color:var(--brand-2);background:#eaf6fe}
     .dept-icon{font-size:1.1rem;flex-shrink:0}
-    .dept-loading{text-align:center;color:#546e7a;font-size:.9rem;padding:20px 0}
-    .dept-err{color:#ef9a9a;font-size:.85rem;text-align:center;padding:10px 0}
+    .dept-loading{text-align:center;color:var(--ink-soft);font-size:.92rem;padding:20px 0}
+    .dept-err{color:var(--err-ink);font-size:.9rem;text-align:center;padding:10px 0}
+
+    @media (max-width:420px){ .card{padding:32px 22px 24px} .brand-name{font-size:2rem} }
   </style>
 </head>
 <body>
+<div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
 
 <!-- Department selection modal -->
 <div class="modal-overlay" id="deptOverlay">
@@ -87,42 +121,44 @@
 
 <div class="wrap">
   <div class="card">
-    <div class="logo">
-      <span class="logo-hex">⬡</span>
-      <div class="logo-title">ระบบคิว</div>
-      <div class="logo-sub">ระบบบริหารคิวการบริการ</div>
+    <div class="brand">
+      <img class="brand-icon" src="/app-icon.png" alt="Queue-Med"/>
+      <div class="brand-name">Queue-Med</div>
+      <div class="brand-sub">ระบบบริหารจัดการคิวโรงพยาบาล</div>
+      <span class="brand-pill">HOSPITAL QUEUE SYSTEM</span>
     </div>
 
     <div class="field">
-      <label>ชื่อผู้ใช้งาน</label>
-      <input type="text" id="username" placeholder="กรอกชื่อผู้ใช้งาน" autocomplete="username"/>
+      <label for="username">ชื่อผู้ใช้งาน</label>
+      <div class="input-wrap"><span class="ic">👤</span>
+        <input type="text" id="username" placeholder="ชื่อผู้ใช้ HOSxP" autocomplete="username"/></div>
     </div>
     <div class="field">
-      <label>รหัสผ่าน</label>
-      <input type="password" id="password" placeholder="กรอกรหัสผ่าน" autocomplete="current-password"/>
+      <label for="password">รหัสผ่าน</label>
+      <div class="input-wrap"><span class="ic">🔒</span>
+        <input type="password" id="password" placeholder="รหัสผ่าน" autocomplete="current-password"/></div>
     </div>
 
     <button class="btn-login" id="loginBtn" onclick="doLogin()">เข้าสู่ระบบ</button>
     <div class="err" id="errMsg"></div>
 
-    <div id="bmsToggleWrap" style="text-align:center;margin-top:16px">
-      <a href="javascript:void(0)" onclick="toggleBmsBox()" style="color:#546e7a;font-size:.8rem;text-decoration:underline">เข้าสู่ระบบด้วย BMS Session</a>
+    <div class="or">หรือ</div>
+    <div id="bmsToggleWrap">
+      <button class="btn-bms" onclick="toggleBmsBox()">🔑 เข้าสู่ระบบด้วย BMS Session</button>
     </div>
     <div id="bmsBox" style="display:none;margin-top:14px">
       <div class="field">
-        <label>BMS Session ID</label>
-        <input type="text" id="bmsSessionId" placeholder="วาง Session ID ที่นี่"/>
+        <label for="bmsSessionId">BMS Session ID</label>
+        <div class="input-wrap"><span class="ic">🔑</span>
+          <input type="text" id="bmsSessionId" placeholder="วาง Session ID ที่นี่"/></div>
       </div>
-      <button class="btn-login" id="bmsLoginBtn" onclick="doBmsLogin()" style="background:linear-gradient(135deg,#66bb6a,#2e7d32)">เข้าสู่ระบบด้วย BMS Session</button>
+      <button class="btn-login" id="bmsLoginBtn" onclick="doBmsLogin()">เข้าสู่ระบบด้วย BMS Session</button>
       <div class="err" id="bmsErrMsg"></div>
     </div>
 
-    <hr class="divider"/>
-
-    <button class="btn-cfg" onclick="location.href='/db-config.html'">
-      <span class="cfg-icon">⚙</span> ตั้งค่าการเชื่อมต่อฐานข้อมูล
-    </button>
+    <button class="btn-cfg" onclick="location.href='/db-config.html'">⚙️ ตั้งค่าการเชื่อมต่อฐานข้อมูล</button>
   </div>
+  <div class="foot">Queue-Med · เชื่อมต่อข้อมูลผู้ใช้งานจาก HOSxP</div>
 </div>
 
 <script>
@@ -344,34 +380,6 @@
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 </script>
-<div id="_uiPnl" style="position:fixed;bottom:16px;right:16px;z-index:10000;font-family:'Segoe UI',Tahoma,sans-serif">
-  <button onclick="_uiToggle()" title="ปรับสีหน้าจอ" style="width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(13,31,51,.85);color:#90caf9;font-size:1.1rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)">🎨</button>
-  <div id="_uiBox" style="display:none;position:absolute;bottom:48px;right:0;width:220px;background:#0d1f33;border:1px solid #1e3a5f;border-radius:14px;padding:14px 16px;box-shadow:0 4px 20px rgba(0,0,0,.6)">
-    <div style="font-size:.8rem;color:#90caf9;font-weight:700;margin-bottom:12px">🎨 ปรับสีหน้าจอ</div>
-    <div style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;font-size:.72rem;color:#ccc;margin-bottom:4px"><span>☀ ความสว่าง</span><span id="_brLbl" style="color:#ffd54f;font-weight:700">1.00</span></div>
-      <input id="_brSlider" type="range" min="0.4" max="1.6" step="0.05" value="1" style="width:100%;accent-color:#ffd54f;cursor:pointer"/>
-    </div>
-    <div style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;font-size:.72rem;color:#ccc;margin-bottom:4px"><span>🎨 ความสด</span><span id="_stLbl" style="color:#80deea;font-weight:700">1.20</span></div>
-      <input id="_stSlider" type="range" min="0.3" max="2.5" step="0.05" value="1.2" style="width:100%;accent-color:#80deea;cursor:pointer"/>
-    </div>
-    <button onclick="_uiReset()" style="width:100%;background:rgba(255,255,255,.06);border:1px solid #1e3a5f;color:#90caf9;border-radius:8px;padding:6px;font-size:.75rem;cursor:pointer;font-family:inherit">↺ รีเซ็ต</button>
-  </div>
-</div>
-<script>
-(function(){
-  var BK='qf_brightness',SK='qf_saturation';
-  function _applyV(b,s){b=parseFloat(b)||1;s=parseFloat(s)||1.2;localStorage.setItem(BK,b);localStorage.setItem(SK,s);document.body.style.filter='brightness('+b+') saturate('+s+')';var bl=document.getElementById('_brLbl'),sl=document.getElementById('_stLbl'),bs=document.getElementById('_brSlider'),ss=document.getElementById('_stSlider');if(bl)bl.textContent=b.toFixed(2);if(bs)bs.value=b;if(sl)sl.textContent=s.toFixed(2);if(ss)ss.value=s;}
-  window._applyGlobalColor=_applyV;
-  function _applyF(){_applyV(parseFloat(localStorage.getItem(BK)||'1'),parseFloat(localStorage.getItem(SK)||'1.2'));}
-  _applyF();
-  fetch('/api/global-config').then(function(r){return r.json();}).then(function(d){if(d&&d.brightness!=null)_applyV(d.brightness,d.saturation);}).catch(function(){});
-  window._uiToggle=function(){var b=document.getElementById('_uiBox');b.style.display=b.style.display==='none'?'block':'none';};
-  window._uiReset=function(){_applyV(1,1.2);fetch('/api/global-config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brightness:1,saturation:1.2})}).catch(function(){});};
-  document.addEventListener('DOMContentLoaded',function(){_applyF();document.getElementById('_brSlider').oninput=function(){var b=parseFloat(this.value),s=parseFloat(localStorage.getItem(SK)||'1.2');_applyV(b,s);fetch('/api/global-config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brightness:b,saturation:s})}).catch(function(){});};document.getElementById('_stSlider').oninput=function(){var b=parseFloat(localStorage.getItem(BK)||'1'),s=parseFloat(this.value);_applyV(b,s);fetch('/api/global-config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({brightness:b,saturation:s})}).catch(function(){});};});
-})();
-if(typeof socket!=='undefined')socket.on('global_config_updated',d=>{if(window._applyGlobalColor&&d&&d.brightness!=null)window._applyGlobalColor(d.brightness,d.saturation);});
-</script>
+<!-- login page keeps its own pastel colours: the shared brightness/saturation panel is not applied here -->
 </body>
 </html>

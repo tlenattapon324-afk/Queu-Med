@@ -2185,6 +2185,7 @@ socket.on('print_config_updated', cfg => { /* live update if needed */ });
 // ═══════════════════════════════════════════════════════════════
 
 const BG_PRESETS = {
+  pastel: { name:'Pastel', t:'linear-gradient(135deg,#f2f9ff,#bfe0fb)', c:['#f2f9ff','#dceefe','#bfe0fb'] },
   teal:   { name:'Teal',   t:'linear-gradient(135deg,#26c6da,#00838f)', c:['#29b6c8','#0097a7','#00696f'] },
   ocean:  { name:'Ocean',  t:'linear-gradient(135deg,#1e88e5,#0d47a1)', c:['#1e88e5','#0d47a1','#0b3574'] },
   purple: { name:'Purple', t:'linear-gradient(135deg,#9c27b0,#4a148c)', c:['#9c27b0','#6a1b9a','#4a148c'] },
@@ -2453,6 +2454,20 @@ function clearBgPreset() {
 }
 
 function setBgPreset(key, el) {
+  if (key === 'pastel') {
+    // light background → dark, larger text so everything stays readable
+    const [c1, c2, c3] = BG_PRESETS.pastel.c;
+    Object.assign(sdCfg, {
+      bgPreset:'pastel', bgC1:c1, bgC2:c2, bgC3:c3, accentColor:'#0a8fc0',
+      titleColor:'#0a6fa8', cardNameColor:'#123a5a', cardWaitNumColor:'#e65100',
+      cardNameFontSize:Math.max(sdCfg.cardNameFontSize || 0, 22), cardWaitFontSize:Math.max(sdCfg.cardWaitFontSize || 0, 16),
+      barBgColor:'#ffffff', barBgOpacity:92, barInputBg:100, barInputTextColor:'#123a5a',
+      barPlaceholderColor:'#123a5a', barPlaceholderOpacity:45, barLabelColor:'#0a6fa8',
+      barLabelSize:Math.max(sdCfg.barLabelSize || 0, 14), barInputFontSize:Math.max(sdCfg.barInputFontSize || 0, 24),
+    });
+    initScreenDesigner();
+    return;
+  }
   document.querySelectorAll('.bg-chip').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
   sdCfg.bgPreset = key;

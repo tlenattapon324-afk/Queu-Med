@@ -1,17 +1,21 @@
-// ป้องกันการ copy URL ของ /api/sys/*, patient-lookup, patient-drugs ไปยิงตรงใน Postman
-// สคริปต์นี้แนบ token ให้ทุก fetch() ไปยัง endpoint เหล่านี้โดยอัตโนมัติ — หน้าจอทำงานปกติ ไม่ต้องกรอกอะไรเอง
+// ป้องกันการ copy URL ของ API ไปยิงตรงใน Postman — server ตอบเฉพาะ request ที่มี X-Queue-Token
+// สคริปต์นี้แนบ token ให้ทุก fetch() ไปยัง endpoint ที่ป้องกันไว้โดยอัตโนมัติ — หน้าจอทำงานปกติ ไม่ต้องกรอกอะไรเอง
+// token ได้จาก /api/client-token ซึ่ง server ให้เฉพาะหน้าเว็บของระบบเอง (same-origin) หรือผู้ที่ login แล้ว
 (function () {
-  var PROTECTED = [/^\/api\/sys\//, /^\/api\/patient-lookup/, /^\/api\/patient-drugs/];
+  var PROTECTED = [/^\/api\/sys\//, /^\/api\/patient-lookup/, /^\/api\/patient-drugs/, /^\/api\/systems/,
+                   /^\/api\/server\/restart/, /^\/api\/startup\/set/, /^\/api\/global-config/, /^\/api\/local-print/];
   var nativeFetch = window.fetch.bind(window);
-  var tokenPromise = nativeFetch('/api/client-token')
-    .then(function (r) { return r.json(); })
+  var authToken = '';
+  try { authToken = sessionStorage.getItem('authToken') || ''; } catch (e) {}
+  var tokenPromise = nativeFetch('/api/client-token', { headers: authToken ? { 'X-Auth-Token': authToken } : {} })
+    .then(function (r) { return r.ok ? r.json() : {}; })
     .then(function (d) { return d.token || ''; })
     .catch(function () { return ''; });
 
   function needsToken(url) {
     try {
-      var path = new URL(url, location.origin).pathname;
-      return PROTECTED.some(function (re) { return re.test(path); });
+      var u = new URL(url, location.origin);
+      return u.origin === location.origin && PROTECTED.some(function (re) { return re.test(u.pathname); });
     } catch (e) { return false; }
   }
 

@@ -451,12 +451,12 @@
               toast('บันทึกสำเร็จ กำลังกลับไปหน้าเข้าสู่ระบบ...');
               setTimeout(() => location.href = '/login.html', 1200);
             } else {
-              btn.disabled = false;
-              btn.textContent = '💾 บันทึกข้อมูลเชื่อมต่อ';
+              // connection is saved either way — show the table error, then return to login
               const msgEl = document.getElementById('tblMsg');
-              msgEl.textContent = '✗ บันทึกข้อมูลเชื่อมต่อสำเร็จ แต่สร้างตารางไม่สำเร็จ: ' + (m.message || '');
+              msgEl.textContent = '✗ บันทึกข้อมูลเชื่อมต่อสำเร็จ แต่สร้างตารางไม่สำเร็จ: ' + (m.message || '') + ' — กลับหน้าเข้าสู่ระบบใน 3 วินาที';
               msgEl.className = 'tbl-msg fail';
-              checkTables();
+              toast('บันทึกการเชื่อมต่อแล้ว (สร้างตารางไม่สำเร็จ)');
+              setTimeout(() => location.href = '/login.html', 3000);
             }
           });
       } else {

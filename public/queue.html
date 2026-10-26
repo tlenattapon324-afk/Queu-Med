@@ -35,18 +35,18 @@
       position:relative;z-index:10;
       background:rgba(255,255,255,.65);backdrop-filter:blur(14px);
       border-bottom:1px solid rgba(13,58,69,.12);
-      padding:0 20px;display:flex;align-items:center;height:48px;gap:4px;
+      padding:0 22px;display:flex;align-items:center;height:58px;gap:6px;
     }
-    .nav-logo{font-size:.88rem;font-weight:900;color:#00838f;margin-right:14px;
+    .nav-logo{font-size:1.1rem;font-weight:900;color:#00838f;margin-right:14px;
       text-decoration:none;white-space:nowrap;letter-spacing:1px}
     nav a{color:rgba(13,58,69,.75);text-decoration:none;padding:4px 11px;
-      border-radius:16px;font-size:.78rem;font-weight:600;transition:all .2s;white-space:nowrap}
+      border-radius:18px;font-size:1rem;font-weight:600;transition:all .2s;white-space:nowrap}
     nav a:hover{background:rgba(0,151,167,.12)}
     nav a.active{background:#00acc1;color:#fff}
-    .nav-officer{font-size:.74rem;color:rgba(13,58,69,.55);
+    .nav-officer{font-size:.92rem;color:#2c5566;
       margin-left:auto;padding:0 4px;white-space:nowrap}
     .btn-logout{background:#fdecea;border:1px solid #f3b6b0;
-      color:#c62828;border-radius:16px;padding:4px 12px;font-size:.74rem;font-weight:600;
+      color:#c62828;border-radius:16px;padding:6px 14px;font-size:.9rem;font-weight:600;
       cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap;margin-left:6px}
     .btn-logout:hover{background:#f9d3ce}
     .nav-ipd-toggle{display:flex;align-items:center;gap:5px;cursor:pointer;
@@ -55,7 +55,7 @@
       color:#2e7d32;white-space:nowrap;transition:all .2s;user-select:none}
     .nav-ipd-toggle:hover{background:rgba(46,125,50,.18)}
     .nav-ipd-toggle.active{background:rgba(46,125,50,.28);border-color:#66bb6a;color:#1b5e20}
-    .nav-ipd-lbl{font-weight:700;font-size:.75rem}
+    .nav-ipd-lbl{font-weight:700;font-size:.92rem}
     .nav-ipd-sw{position:relative;flex-shrink:0}
     .nav-ipd-sw input{opacity:0;width:0;height:0;position:absolute}
     .nav-ipd-knob{position:relative;width:32px;height:17px;
@@ -227,8 +227,8 @@
     /* QN / HN field groups */
     .bar-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
     .bar-field-lbl{
-      font-size:.6rem;font-weight:700;letter-spacing:1.8px;
-      color:#00838f;text-transform:uppercase;padding-left:4px;
+      font-size:.9rem;font-weight:700;letter-spacing:1px;
+      color:#00697f;text-transform:uppercase;padding-left:4px;
     }
     .bar-sep{
       width:1px;background:rgba(0,151,167,.15);
@@ -240,7 +240,7 @@
       background:#f0fbfd;
       border:1.5px solid rgba(0,151,167,.3);
       border-radius:12px;padding:12px 14px;
-      color:#0d3a45;font-size:1.05rem;font-weight:700;
+      color:#0d3a45;font-size:1.5rem;font-weight:700;
       font-family:'Kanit',sans-serif;text-align:center;
       letter-spacing:2px;transition:border-color .2s,background .2s,box-shadow .2s;
     }
@@ -248,7 +248,7 @@
       outline:none;border-color:#00acc1;background:#e0f7fa;
       box-shadow:0 0 0 3px rgba(0,172,193,.15);
     }
-    .bar-input::placeholder{font-size:.78rem;letter-spacing:.5px;font-weight:300;color:rgba(13,58,69,.32)}
+    .bar-input::placeholder{font-size:1.05rem;letter-spacing:.5px;font-weight:300;color:rgba(13,58,69,.32)}
     .bar-input.active-field{
       border-color:#00acc1;background:#e0f7fa;
       box-shadow:0 0 0 3px rgba(0,172,193,.12)}
@@ -263,8 +263,8 @@
       cursor:pointer;font-family:'Kanit',sans-serif;transition:all .22s;
       box-shadow:0 4px 16px rgba(0,150,170,.4);
     }
-    .btn-bar-search .si{font-size:1.35rem}
-    .btn-bar-search .st{font-size:.62rem;font-weight:700;letter-spacing:1.5px;opacity:.9}
+    .btn-bar-search .si{font-size:1.7rem}
+    .btn-bar-search .st{font-size:.95rem;font-weight:700;letter-spacing:1px}
     .btn-bar-search:hover{
       background:linear-gradient(145deg,#26c6da,#00acc1);
       transform:translateY(-1px);box-shadow:0 7px 22px rgba(0,150,170,.5);
@@ -290,20 +290,20 @@
       backdrop-filter:blur(10px);
       box-shadow:0 6px 24px rgba(0,151,167,.1);
     }
-    .pt-ava{width:48px;height:48px;border-radius:14px;flex-shrink:0;
+    .pt-ava{width:58px;height:58px;border-radius:14px;flex-shrink:0;
       background:linear-gradient(135deg,#00acc1,#00838f);
       display:flex;align-items:center;justify-content:center;font-size:1.4rem}
     .pt-body{flex:1;min-width:0}
-    .pt-name{font-size:1.05rem;font-weight:800;color:#0d3a45;margin-bottom:6px;
+    .pt-name{font-size:1.5rem;font-weight:800;color:#0d3a45;margin-bottom:8px;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .pt-tags{display:flex;gap:8px;flex-wrap:wrap}
     .pt-tag{display:inline-flex;align-items:center;gap:5px;
       background:#e0f7fa;border:1px solid rgba(0,151,167,.25);
-      border-radius:20px;padding:2px 10px;font-size:.76rem;color:#00697f;font-weight:600}
+      border-radius:20px;padding:4px 12px;font-size:1rem;color:#00697f;font-weight:600}
     .pt-tag b{color:#0d3a45;font-weight:800}
     .btn-back{flex-shrink:0;background:rgba(0,151,167,.08);
       border:1px solid rgba(0,151,167,.25);color:#00697f;
-      border-radius:10px;padding:7px 15px;font-size:.78rem;font-weight:700;
+      border-radius:12px;padding:9px 18px;font-size:1rem;font-weight:700;
       cursor:pointer;font-family:'Kanit',sans-serif;transition:all .2s;white-space:nowrap}
     .btn-back:hover{background:rgba(0,151,167,.18);color:#0d3a45}
 
@@ -315,7 +315,7 @@
       transition:background .2s;user-select:none}
     .drug-card-head:hover{background:rgba(0,151,167,.06)}
     .drug-icon{font-size:1.5rem;flex-shrink:0}
-    .drug-summary{flex:1;font-size:1.15rem;font-weight:800;color:#0d3a45}
+    .drug-summary{flex:1;font-size:1.35rem;font-weight:800;color:#0d3a45}
     .drug-summary b{color:#e65100;font-size:1.6rem;font-weight:900}
     .drug-toggle-arrow{color:rgba(13,58,69,.4);transition:transform .2s;font-size:1rem;flex-shrink:0}
     .drug-card.open .drug-toggle-arrow{transform:rotate(180deg)}
@@ -330,7 +330,7 @@
     .drug-item-meta b{color:#00838f;font-size:.85rem}
     .drug-empty{text-align:center;color:rgba(13,58,69,.4);padding:14px;font-size:.8rem}
 
-    .cards-lbl{font-size:.7rem;color:#00697f;letter-spacing:3px;font-weight:700;
+    .cards-lbl{font-size:1.15rem;color:#0a5f86;letter-spacing:1px;font-weight:700;
       text-align:center;margin-bottom:14px;width:100%;text-transform:uppercase}
     .cards-grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;width:100%}
     .q-card{
@@ -347,8 +347,8 @@
     .qc-icon{width:56px;height:56px;border-radius:15px;margin:0 auto 12px;
       display:flex;align-items:center;justify-content:center;
       font-size:1.55rem;font-weight:900;color:#000;box-shadow:0 5px 18px rgba(0,0,0,.22)}
-    .qc-name{font-size:.95rem;font-weight:800;margin-bottom:8px;color:#0d3a45}
-    .qc-wait{font-size:.76rem;color:#5a8a94;font-weight:600}
+    .qc-name{font-size:1.4rem;font-weight:800;margin-bottom:8px;color:#0d3a45}
+    .qc-wait{font-size:1.05rem;color:#3d6070;font-weight:600}
     .qc-wait strong{font-size:.92rem;font-weight:800;color:#e65100}
     .no-types{text-align:center;color:rgba(13,58,69,.4);padding:32px;font-size:.88rem}
 
@@ -358,7 +358,7 @@
     .type-group.opd{border-color:rgba(30,136,229,.65);background:rgba(30,136,229,.12)}
     .type-group.ipd{border-color:rgba(0,200,83,.7);background:rgba(0,200,83,.12)}
     .type-group.both{border-color:rgba(255,193,7,.7);background:rgba(255,193,7,.10)}
-    .type-group-hdr{display:inline-block;font-size:.95rem;font-weight:800;letter-spacing:1px;
+    .type-group-hdr{display:inline-block;font-size:1.2rem;font-weight:800;letter-spacing:1px;
       padding:5px 16px;border-radius:12px;margin-bottom:12px;color:#fff}
     .type-group.opd  .type-group-hdr{background:#1565c0}
     .type-group.ipd  .type-group-hdr{background:#00897b}
@@ -497,7 +497,7 @@
         <div class="pt-tags">
           <div class="pt-tag">HN: <b id="ptHN">-</b></div>
           <div class="pt-tag"><span id="ptQnLabel">QN</span>: <b id="ptQN">-</b></div>
-          <div class="pt-tag" id="ptPttypeTag" style="display:none;background:rgba(255,213,79,.12);border-color:rgba(255,213,79,.3);color:#ffd54f">สิทธิ: <b id="ptPttype">-</b></div>
+          <div class="pt-tag" id="ptPttypeTag" style="display:none;background:#fff4e0;border-color:#ffcc80;color:#b45309">สิทธิ: <b id="ptPttype">-</b></div>
         </div>
       </div>
       <button class="btn-back" onclick="backToScanner()">← ค้นหาใหม่</button>
@@ -1019,6 +1019,7 @@ function renderCards() {
 
 // ── Apply screen config ───────────────────────────────────────────────────
 const BG_PRESETS_Q = {
+  pastel: ['#f2f9ff','#dceefe','#bfe0fb'],
   teal:   ['#29b6c8','#0097a7','#00696f'],
   ocean:  ['#1e88e5','#0d47a1','#0b3574'],
   purple: ['#9c27b0','#6a1b9a','#4a148c'],
@@ -1035,23 +1036,42 @@ function hexToRgb(hex) {
   return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
 }
 
+// WCAG relative luminance / contrast — keeps text readable whatever colours were saved
+function luminance(hex) {
+  const { r, g, b } = hexToRgb(hex || '#000');
+  const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+}
+function contrast(a, b) {
+  const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p);
+  return (x + 0.05) / (y + 0.05);
+}
+const INK = '#123a5a';
+// keep `fg` if it stands out on `bg`, otherwise dark ink (light bg) / white (dark bg)
+function readable(fg, bg, fallbackOnLight = INK) {
+  if (fg && /^#[0-9a-f]{3,6}$/i.test(fg) && contrast(fg, bg) >= 3.5) return fg;
+  return luminance(bg) > 0.4 ? fallbackOnLight : '#ffffff';
+}
+
 function applyScreenConfig(cfg) {
   if (!cfg || !Object.keys(cfg).length) return;
 
-  // Resolve background colors: prefer explicit bgC1/2/3, fallback to preset, then teal
+  // Resolve background colors: preset wins (so choosing "pastel" in settings always applies), then explicit bgC1/2/3, then teal
   let c1 = cfg.bgC1, c2 = cfg.bgC2, c3 = cfg.bgC3;
-  if (!c1 || !c2 || !c3) {
-    [c1, c2, c3] = BG_PRESETS_Q[cfg.bgPreset] || BG_PRESETS_Q.teal;
-  }
+  if (BG_PRESETS_Q[cfg.bgPreset]) [c1, c2, c3] = BG_PRESETS_Q[cfg.bgPreset];
+  if (!c1 || !c2 || !c3) [c1, c2, c3] = BG_PRESETS_Q.teal;
+  const light = luminance(c2) > 0.55;   // pastel / light backgrounds get light surfaces + dark text
 
   const accent       = cfg.accentColor      || '#00bcd4';
   const font         = cfg.fontFamily       || 'Kanit';
   const titleFs      = cfg.titleFontSize    || 24;
   const titleClr     = cfg.titleColor       || '#ffd54f';
-  const cardNameFs   = cfg.cardNameFontSize || 15;
-  const cardNameClr  = cfg.cardNameColor    || '#ffffff';
-  const waitFs       = cfg.cardWaitFontSize || 12;
-  const waitNumClr   = cfg.cardWaitNumColor || '#ffd54f';
+  // minimum sizes so the kiosk stays readable from a distance, even if smaller sizes were saved
+  const cardNameFs   = Math.max(cfg.cardNameFontSize || 0, 22);
+  const cardBg       = light ? '#ffffff' : c2;
+  const cardNameClr  = readable(cfg.cardNameColor || '#ffffff', cardBg);
+  const waitFs       = Math.max(cfg.cardWaitFontSize || 0, 16);
+  const waitNumClr   = readable(cfg.cardWaitNumColor || '#ffd54f', cardBg, '#e65100');
 
   // Card size
   const szMap = {
@@ -1067,7 +1087,12 @@ function applyScreenConfig(cfg) {
     solid:   'background:rgba(0,0,0,.35);border:1px solid rgba(0,0,0,.45)',
     outline: 'background:transparent;border:2px solid rgba(255,255,255,.45)',
   };
-  const cardCss = csMap[cfg.cardStyle] || csMap.glass;
+  const csMapLight = {
+    glass:   'background:rgba(255,255,255,.92);border:1.5px solid rgba(10,111,168,.16);box-shadow:0 8px 24px rgba(21,70,184,.10)',
+    solid:   'background:#ffffff;border:1.5px solid rgba(10,111,168,.22);box-shadow:0 8px 24px rgba(21,70,184,.12)',
+    outline: 'background:rgba(255,255,255,.55);border:2px solid ' + accent,
+  };
+  const cardCss = (light ? csMapLight : csMap)[cfg.cardStyle] || (light ? csMapLight : csMap).glass;
 
   // Inject stylesheet
   let el = document.getElementById('_screenCfgStyle');
@@ -1084,12 +1109,14 @@ function applyScreenConfig(cfg) {
         radial-gradient(ellipse 60% 50% at 100% 80%, ${c2}80 0%, transparent 55%),
         linear-gradient(145deg,${c1} 0%,${c2} 45%,${c3} 100%) !important;
     }
-    nav { background:rgba(0,0,0,${(cfg.navOpacity??45)/100}) !important; }
+    nav { background:${light ? 'rgba(255,255,255,.8)' : `rgba(0,0,0,${(cfg.navOpacity??45)/100})`} !important; }
+    ${light ? '' : `nav a, .nav-officer, .nav-logo { color:#ffffff !important; } nav a.active { background:${accent} !important; }`}
+    .qc-wait { color:${readable(light ? '#3d6070' : '#e0f2f1', cardBg)} !important; }
 
     /* Scan title */
     .scan-title {
       font-size:${titleFs}px !important;
-      color:${titleClr} !important;
+      color:${readable(titleClr, c2, '#0a6fa8')} !important;
       font-family:'${font}','Kanit',sans-serif !important;
     }
 
@@ -1118,20 +1145,20 @@ function applyScreenConfig(cfg) {
 
     /* Bottom bar */
     ${(() => {
-      const barBgHex  = cfg.barBgColor || '#001c28';
-      const barBgOp   = (cfg.barBgOpacity ?? 78) / 100;
+      // light theme: white bar + dark text; dark theme: saved colours (made readable)
+      const barBgHex  = light ? '#ffffff' : (cfg.barBgColor || '#001c28');
+      const barBgOp   = light ? 0.92 : (cfg.barBgOpacity ?? 78) / 100;
       const rgb       = hexToRgb(barBgHex);
       const barBgCss  = `rgba(${rgb.r},${rgb.g},${rgb.b},${barBgOp})`;
       const borderClr = cfg.barInputBorderColor || (accent+'52');
       const inputBorderClr = cfg.barInputBorderColor || (accent+'44');
-      const lblClr    = cfg.barLabelColor || (accent+'c0');
-      const lblSz     = cfg.barLabelSize  || 10;
-      const inputBgOp = (cfg.barInputBg ?? 8) / 100;
-      const inputBgCss= `rgba(255,255,255,${inputBgOp})`;
-      const inputClr  = cfg.barInputTextColor || '#ffffff';
-      const inputFs   = cfg.barInputFontSize  || 17;
-      const phHex     = cfg.barPlaceholderColor || '#ffffff';
-      const phOp      = (cfg.barPlaceholderOpacity ?? 28) / 100;
+      const lblClr    = readable(cfg.barLabelColor || accent, barBgHex, '#0a6fa8');
+      const lblSz     = Math.max(cfg.barLabelSize || 0, 14);
+      const inputBgCss= light ? '#f4faff' : `rgba(255,255,255,${(cfg.barInputBg ?? 8) / 100})`;
+      const inputClr  = readable(cfg.barInputTextColor || '#ffffff', light ? '#f4faff' : barBgHex);
+      const inputFs   = Math.max(cfg.barInputFontSize || 0, 24);
+      const phHex     = light ? INK : (cfg.barPlaceholderColor || '#ffffff');
+      const phOp      = light ? 0.45 : Math.max((cfg.barPlaceholderOpacity ?? 28) / 100, 0.5);
       const phRgb     = hexToRgb(phHex);
       const phCss     = `rgba(${phRgb.r},${phRgb.g},${phRgb.b},${phOp})`;
       return `

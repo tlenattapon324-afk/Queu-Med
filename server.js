@@ -214,6 +214,10 @@ function requireApiToken(req, res, next) {
   res.status(401).json({ success: false, message: 'Unauthorized: token required' });
 }
 app.use('/api/sys', requireApiToken);
+// Changing systems, server control and shared settings — same token as /api/sys
+app.use('/api/systems', (req, res, next) => req.method === 'GET' ? next() : requireApiToken(req, res, next));
+app.use(['/api/server/restart', '/api/startup/set', '/api/local-print'], requireApiToken);
+app.post('/api/global-config', requireApiToken);
 
 // ── DB helpers (fire-and-forget queue logging) ────────────────────────────
 function dbFire(fn) {
@@ -1384,7 +1388,18 @@ app.post('/api/db-config/gen-token', requireAdmin, (req, res) => {
 
 // Bootstrap endpoint — หน้าเว็บของระบบเองใช้ดึง token มาแนบกับ request /api/sys/* โดยอัตโนมัติ
 // (ผู้ใช้ทั่วไปไม่เห็น ไม่ต้องกรอกเอง แต่ถ้า copy URL ไปยิงตรงใน Postman โดยไม่มี token จะถูกปฏิเสธ)
+// Browsers mark fetch() from the app's own pages with Sec-Fetch-Site: same-origin; Postman, curl and
+// cross-site pages don't. A logged-in session token is also accepted.
+function isOwnPageRequest(req) {
+  const site = req.headers['sec-fetch-site'];
+  if (site !== 'same-origin') return false;
+  const ref = req.headers['referer'] || '';
+  try { return new URL(ref).host === req.headers.host; } catch { return false; }
+}
 app.get('/api/client-token', (req, res) => {
+  const authTok = req.headers['x-auth-token'];
+  if (!isOwnPageRequest(req) && !(authTok && sessions[authTok]))
+    return res.status(403).json({ success: false, message: 'Forbidden' });
   const cfg = loadDbConfig();
   res.json({ token: cfg.apiToken || '' });
 });
@@ -1629,7 +1644,7 @@ app.post('/api/auth/bms-login', async (req, res) => {
 
   let bmsData;
   try {
-    const r = await fetch('https://hosxp.net/phapi/PasteJSON?Action=GET&code=' + encodeURIComponent(sessionId));
+    const r = await fetch('https://hosxp.net/phapi/PasteJSON?Action=GET&code=' + encodeURIComponent(sessionId), { signal: AbortSignal.timeout(30000) });
     bmsData = await r.json();
   } catch (err) {
     return res.json({ success: false, message: 'ติดต่อ BMS Session Server ไม่สำเร็จ: ' + err.message });
@@ -1664,42 +1679,6 @@ app.post('/api/auth/bms-login', async (req, res) => {
     res.json({ success: true, token, officer: { name: officer.officer_name || officer.officer_login_name } });
   } catch (err) {
     res.json({ success: false, message: 'เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' + err.message });
-  }
-});
-
-// ── DEBUG (ลบออกหลังแก้ไขเสร็จ) ────────────────────────────────────────────
-app.post('/api/debug/hash-check', async (req, res) => {
-  const { username, password } = req.body;
-  const cfg = loadDbConfig();
-  try {
-    let officer = null;
-    if (isMysqlType(cfg.type)) {
-      const mysql = require('mysql2/promise');
-      const conn = await mysql.createConnection({ host: cfg.host, port: Number(cfg.port), database: cfg.database, user: cfg.username, password: cfg.password, connectTimeout: 10000, charset: 'utf8mb4' });
-      await conn.execute('SET NAMES utf8mb4');
-      const [rows] = await conn.execute('SELECT officer_login_name, officer_login_password_md5 FROM officer WHERE officer_login_name = ? LIMIT 1', [username]);
-      await conn.end();
-      officer = rows[0] || null;
-    } else {
-      const { Client } = require('pg');
-      const client = new Client({ host: cfg.host, port: Number(cfg.port), database: cfg.database, user: cfg.username, password: cfg.password, connectionTimeoutMillis: 10000 });
-      await client.connect();
-      const result = await client.query('SELECT officer_login_name, officer_login_password_md5 FROM officer WHERE officer_login_name = $1 LIMIT 1', [username]);
-      await client.end();
-      officer = result.rows[0] || null;
-    }
-    if (!officer) return res.json({ found: false, message: 'ไม่พบ username นี้' });
-    const stored  = officer.officer_login_password_md5 || '';
-    const computed = crypto.createHash('md5').update(password).digest('hex');
-    res.json({
-      found:          true,
-      stored_hash:    stored,
-      stored_length:  stored.length,
-      computed_md5:   computed,
-      match:          computed.toLowerCase() === stored.trim().toLowerCase(),
-    });
-  } catch (err) {
-    res.json({ error: err.message });
   }
 });
 
